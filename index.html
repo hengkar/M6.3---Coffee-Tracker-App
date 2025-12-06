@@ -19,43 +19,185 @@
                     <h3>Today</h3>
                     <p class="stat-number" id="todayCount">0</p>
                     <p class="stat-label">cups</p>
+                    <p class="stat-money" id="todaySpend">$0.00</p>
                 </div>
                 <div class="stat-card">
                     <h3>This Week</h3>
                     <p class="stat-number" id="weekCount">0</p>
                     <p class="stat-label">cups</p>
+                    <p class="stat-money" id="weekSpend">$0.00</p>
+                </div>
+                <div class="stat-card">
+                    <h3>This Month</h3>
+                    <p class="stat-number" id="monthSpend">$0.00</p>
+                    <p class="stat-label">spent</p>
                 </div>
                 <div class="stat-card">
                     <h3>Total</h3>
                     <p class="stat-number" id="totalCount">0</p>
                     <p class="stat-label">cups</p>
+                    <p class="stat-money" id="totalSpend">$0.00</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Average Cost</h3>
+                    <p class="stat-number" id="avgCost">$0.00</p>
+                    <p class="stat-label">per cup</p>
+                </div>
+            </div>
+
+            <div class="goals-section">
+                <div class="goal-card">
+                    <div class="goal-header">
+                        <h3>Daily Goal</h3>
+                        <button id="setGoalBtn" class="btn-icon" title="Set daily goal">⚙️</button>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="goalProgress"></div>
+                    </div>
+                    <p class="progress-text" id="goalText">Set a goal</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-header">
+                        <h3>Monthly Budget</h3>
+                        <button id="setBudgetBtn" class="btn-icon" title="Set monthly budget">⚙️</button>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="budgetProgress"></div>
+                    </div>
+                    <p class="progress-text" id="budgetText">Set a budget</p>
                 </div>
             </div>
 
             <div class="add-coffee-section">
                 <h2>Add Coffee</h2>
                 <div class="coffee-form">
-                    <div class="form-group">
-                        <label for="coffeeType">Type:</label>
-                        <select id="coffeeType">
-                            <option value="Espresso">Espresso</option>
-                            <option value="Latte">Latte</option>
-                            <option value="Cappuccino">Cappuccino</option>
-                            <option value="Americano">Americano</option>
-                            <option value="Mocha">Mocha</option>
-                            <option value="Cold Brew">Cold Brew</option>
-                            <option value="Drip Coffee">Drip Coffee</option>
-                        </select>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="coffeeType">Type:</label>
+                            <select id="coffeeType">
+                                <option value="Espresso">Espresso</option>
+                                <option value="Latte">Latte</option>
+                                <option value="Cappuccino">Cappuccino</option>
+                                <option value="Americano">Americano</option>
+                                <option value="Mocha">Mocha</option>
+                                <option value="Cold Brew">Cold Brew</option>
+                                <option value="Drip Coffee">Drip Coffee</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="coffeeSize">Size:</label>
+                            <select id="coffeeSize">
+                                <option value="Small">Small</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Large">Large</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="coffeePrice">Price ($):</label>
+                            <input type="number" id="coffeePrice" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label for="coffeeTemperature">Temperature:</label>
+                            <select id="coffeeTemperature">
+                                <option value="hot">Hot</option>
+                                <option value="iced">Iced</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="coffeeSize">Size:</label>
-                        <select id="coffeeSize">
-                            <option value="Small">Small</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Large">Large</option>
-                        </select>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="coffeeBrewMethod">Brew Method:</label>
+                            <select id="coffeeBrewMethod">
+                                <option value="">Select...</option>
+                                <option value="Drip">Drip</option>
+                                <option value="French Press">French Press</option>
+                                <option value="Espresso Machine">Espresso Machine</option>
+                                <option value="Pour Over">Pour Over</option>
+                                <option value="Aeropress">Aeropress</option>
+                                <option value="Cold Brew">Cold Brew</option>
+                                <option value="Moka Pot">Moka Pot</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="coffeeMilk">Milk Type:</label>
+                            <select id="coffeeMilk">
+                                <option value="">None</option>
+                                <option value="Whole Milk">Whole Milk</option>
+                                <option value="2% Milk">2% Milk</option>
+                                <option value="Skim Milk">Skim Milk</option>
+                                <option value="Oat Milk">Oat Milk</option>
+                                <option value="Almond Milk">Almond Milk</option>
+                                <option value="Soy Milk">Soy Milk</option>
+                                <option value="Coconut Milk">Coconut Milk</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="coffeeRating">Rating:</label>
+                            <select id="coffeeRating">
+                                <option value="0">No rating</option>
+                                <option value="1">⭐</option>
+                                <option value="2">⭐⭐</option>
+                                <option value="3">⭐⭐⭐</option>
+                                <option value="4">⭐⭐⭐⭐</option>
+                                <option value="5">⭐⭐⭐⭐⭐</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="coffeeMood">Mood:</label>
+                            <select id="coffeeMood">
+                                <option value="">Select...</option>
+                                <option value="happy">😊 Happy</option>
+                                <option value="neutral">😐 Neutral</option>
+                                <option value="tired">😴 Tired</option>
+                                <option value="energized">⚡ Energized</option>
+                            </select>
+                        </div>
                     </div>
-                    <button id="addCoffeeBtn" class="btn-primary">Add Coffee</button>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="coffeeLocation">Location/Café:</label>
+                            <input type="text" id="coffeeLocation" placeholder="e.g., Starbucks, Home">
+                        </div>
+                        <div class="form-group">
+                            <label for="coffeeOrigin">Origin/Brand:</label>
+                            <input type="text" id="coffeeOrigin" placeholder="e.g., Colombian, Lavazza">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="coffeeNotes">Notes:</label>
+                            <textarea id="coffeeNotes" rows="2" placeholder="Add notes about this coffee..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="coffeePhoto">Photo:</label>
+                            <input type="file" id="coffeePhoto" accept="image/*">
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="coffeeFavorite">
+                                <span>Mark as Favorite ❤️</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button id="addCoffeeBtn" class="btn-primary">Add Coffee</button>
+                    </div>
+                </div>
+
+                <div class="custom-types-section">
+                    <h3>Custom Coffee Types</h3>
+                    <div class="custom-types-form">
+                        <input type="text" id="customCoffeeType" placeholder="Enter custom type name">
+                        <button id="addCustomTypeBtn" class="btn-secondary">Add Custom Type</button>
+                        <button id="manageTypesBtn" class="btn-secondary">Manage Types</button>
+                    </div>
                 </div>
             </div>
 
