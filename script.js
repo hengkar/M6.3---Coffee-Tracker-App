@@ -11,7 +11,8 @@ class CoffeeTracker {
             'Cold Brew': { small: 100, medium: 200, large: 300 },
             'Drip Coffee': { small: 95, medium: 190, large: 285 }
         };
-        this.currentChart = null;
+        this.chartCanvas = null;
+        this.chartContext = null;
         this.activeChartType = 'trend';
         this.currentCalendarMonth = new Date();
         this.init();
@@ -366,7 +367,7 @@ class CoffeeTracker {
         const chartHeight = canvas.height - 2 * padding;
         
         const maxValue = Math.max(...data.data, 1);
-        const xStep = chartWidth / (data.labels.length - 1 || 1);
+        const xStep = chartWidth / Math.max(data.labels.length - 1, 1);
         
         ctx.strokeStyle = '#6F4E37';
         ctx.lineWidth = 3;
