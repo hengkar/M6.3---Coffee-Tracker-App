@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track your daily coffee consumption with detailed analytics and achievements">
+    <meta name="theme-color" content="#6F4E37">
     <title>Coffee Tracker</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <div class="container">
         <header>
+            <div class="header-controls">
+                <button id="themeToggle" class="icon-btn" title="Toggle dark mode">🌙</button>
+                <button id="userProfileBtn" class="icon-btn" title="User profile">👤</button>
+                <button id="achievementsBtn" class="icon-btn" title="Achievements">🏆</button>
+                <button id="helpBtn" class="icon-btn" title="Help">❓</button>
+            </div>
             <h1>☕ Coffee Tracker</h1>
             <p class="subtitle">Track your daily coffee consumption</p>
         </header>
@@ -55,6 +64,21 @@
                             <option value="Large">Large</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="coffeeCost">Cost ($):</label>
+                        <input type="number" id="coffeeCost" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="coffeeRating">Rating:</label>
+                        <select id="coffeeRating">
+                            <option value="">No rating</option>
+                            <option value="5">⭐⭐⭐⭐⭐</option>
+                            <option value="4">⭐⭐⭐⭐</option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="1">⭐</option>
+                        </select>
+                    </div>
                     <button id="addCoffeeBtn" class="btn-primary">Add Coffee</button>
                 </div>
             </div>
@@ -62,8 +86,59 @@
             <div class="history-section">
                 <div class="history-header">
                     <h2>History</h2>
-                    <button id="clearHistoryBtn" class="btn-secondary">Clear All</button>
+                    <div class="action-buttons">
+                        <button id="undoBtn" class="btn-secondary" disabled>↶ Undo</button>
+                        <button id="exportBtn" class="btn-secondary">⬇ Export</button>
+                        <button id="importBtn" class="btn-secondary">⬆ Import</button>
+                        <button id="clearHistoryBtn" class="btn-secondary">Clear All</button>
+                    </div>
                 </div>
+                
+                <div class="filter-section">
+                    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search by coffee type...">
+                    <button id="toggleFiltersBtn" class="btn-secondary">Advanced Filters</button>
+                </div>
+                
+                <div id="advancedFilters" class="advanced-filters" style="display: none;">
+                    <div class="filter-group">
+                        <label for="filterSize">Size:</label>
+                        <select id="filterSize">
+                            <option value="">All</option>
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Large">Large</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterDateFrom">From:</label>
+                        <input type="date" id="filterDateFrom">
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterDateTo">To:</label>
+                        <input type="date" id="filterDateTo">
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterCostMin">Min Cost ($):</label>
+                        <input type="number" id="filterCostMin" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterCostMax">Max Cost ($):</label>
+                        <input type="number" id="filterCostMax" min="0" step="0.01" placeholder="99.99">
+                    </div>
+                    <div class="filter-group">
+                        <label for="sortBy">Sort By:</label>
+                        <select id="sortBy">
+                            <option value="date-desc">Date (Newest)</option>
+                            <option value="date-asc">Date (Oldest)</option>
+                            <option value="type">Type (A-Z)</option>
+                            <option value="rating">Rating (High-Low)</option>
+                            <option value="cost-high">Cost (High-Low)</option>
+                            <option value="cost-low">Cost (Low-High)</option>
+                        </select>
+                    </div>
+                    <button id="clearFiltersBtn" class="btn-secondary">Clear Filters</button>
+                </div>
+                
                 <div id="coffeeList" class="coffee-list">
                     <p class="empty-message">No coffee entries yet. Add your first cup!</p>
                 </div>
@@ -74,6 +149,89 @@
             <p>Stay caffeinated! ☕</p>
         </footer>
     </div>
+
+    <!-- User Profile Modal -->
+    <div id="userProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>User Profile</h2>
+                <button class="close-modal" data-modal="userProfileModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="profile-section">
+                    <label for="userName">Name:</label>
+                    <input type="text" id="userName" placeholder="Enter your name">
+                </div>
+                <div class="profile-section">
+                    <label>Select Avatar:</label>
+                    <div class="avatar-selector">
+                        <button class="avatar-option" data-avatar="☕">☕</button>
+                        <button class="avatar-option" data-avatar="😊">😊</button>
+                        <button class="avatar-option" data-avatar="🌟">🌟</button>
+                        <button class="avatar-option" data-avatar="🚀">🚀</button>
+                        <button class="avatar-option" data-avatar="🎨">🎨</button>
+                        <button class="avatar-option" data-avatar="🎮">🎮</button>
+                    </div>
+                </div>
+                <button id="saveProfileBtn" class="btn-primary">Save Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievements Modal -->
+    <div id="achievementsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏆 Achievements</h2>
+                <button class="close-modal" data-modal="achievementsModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="achievementsList" class="achievements-list">
+                    <!-- Achievements will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>❓ Help & FAQ</h2>
+                <button class="close-modal" data-modal="helpModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <h3>Getting Started</h3>
+                    <p>Coffee Tracker helps you monitor your daily coffee consumption. Add each coffee you drink with details like type, size, cost, and rating.</p>
+                </div>
+                <div class="help-section">
+                    <h3>Features</h3>
+                    <ul>
+                        <li><strong>Track:</strong> Log every cup with detailed information</li>
+                        <li><strong>Search & Filter:</strong> Find specific entries using advanced filters</li>
+                        <li><strong>Export/Import:</strong> Backup your data in CSV or JSON format</li>
+                        <li><strong>Achievements:</strong> Unlock badges as you track more coffee</li>
+                        <li><strong>Dark Mode:</strong> Switch between light and dark themes</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h3>Keyboard Shortcuts</h3>
+                    <ul>
+                        <li><kbd>Enter</kbd> - Add coffee entry</li>
+                        <li><kbd>Tab</kbd> - Navigate between fields</li>
+                        <li><kbd>Esc</kbd> - Close modals</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="importFileInput" accept=".json,.csv" style="display: none;">
 
     <script src="script.js"></script>
 </body>
