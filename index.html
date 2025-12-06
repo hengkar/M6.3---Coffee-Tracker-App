@@ -32,6 +32,81 @@
                 </div>
             </div>
 
+            <div class="caffeine-tracker-section">
+                <h2>☕ Caffeine Tracker</h2>
+                <div class="caffeine-stats">
+                    <div class="caffeine-card">
+                        <h3>Today's Caffeine</h3>
+                        <p class="caffeine-amount" id="todayCaffeine">0</p>
+                        <p class="caffeine-label">mg</p>
+                        <div class="caffeine-bar">
+                            <div class="caffeine-progress" id="caffeineProgress"></div>
+                        </div>
+                        <p class="caffeine-status" id="caffeineStatus">Healthy range</p>
+                    </div>
+                    <div class="caffeine-info">
+                        <h3>Health Guidelines</h3>
+                        <ul>
+                            <li>🟢 <strong>Safe:</strong> Up to 400mg/day</li>
+                            <li>🟡 <strong>Moderate:</strong> 400-600mg/day</li>
+                            <li>🔴 <strong>High:</strong> Over 600mg/day</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analytics-section">
+                <h2>📊 Analytics Dashboard</h2>
+                <div class="analytics-stats">
+                    <div class="analytics-card">
+                        <h3>Average per Day</h3>
+                        <p class="analytics-number" id="avgPerDay">0</p>
+                        <p class="analytics-label">cups/day</p>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Peak Time</h3>
+                        <p class="analytics-number" id="peakTime">--:--</p>
+                        <p class="analytics-label">most active</p>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>This Month</h3>
+                        <p class="analytics-number" id="monthCount">0</p>
+                        <p class="analytics-label">cups</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-section">
+                <h2>📈 Visualizations</h2>
+                <div class="chart-tabs">
+                    <button class="tab-btn active" data-chart="trend">Trend</button>
+                    <button class="tab-btn" data-chart="weekly">Weekly</button>
+                    <button class="tab-btn" data-chart="types">Types</button>
+                </div>
+                <div class="chart-container">
+                    <canvas id="mainChart"></canvas>
+                </div>
+            </div>
+
+            <div class="calendar-section">
+                <h2>📅 Calendar Heatmap</h2>
+                <div class="calendar-controls">
+                    <button id="prevMonth" class="calendar-nav">←</button>
+                    <h3 id="calendarMonth">December 2025</h3>
+                    <button id="nextMonth" class="calendar-nav">→</button>
+                </div>
+                <div id="calendar" class="calendar-grid"></div>
+                <div class="calendar-legend">
+                    <span>Less</span>
+                    <div class="legend-item" data-level="0"></div>
+                    <div class="legend-item" data-level="1"></div>
+                    <div class="legend-item" data-level="2"></div>
+                    <div class="legend-item" data-level="3"></div>
+                    <div class="legend-item" data-level="4"></div>
+                    <span>More</span>
+                </div>
+            </div>
+
             <div class="add-coffee-section">
                 <h2>Add Coffee</h2>
                 <div class="coffee-form">
