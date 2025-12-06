@@ -374,39 +374,77 @@ class CoffeeTracker {
     }
 
     saveToStorage() {
-        localStorage.setItem('coffeeEntries', JSON.stringify(this.coffeeEntries));
+        try {
+            localStorage.setItem('coffeeEntries', JSON.stringify(this.coffeeEntries));
+        } catch (e) {
+            console.error('Failed to save to localStorage:', e);
+            alert('Warning: Unable to save data. Your storage may be full.');
+        }
     }
 
     loadFromStorage() {
-        const data = localStorage.getItem('coffeeEntries');
-        return data ? JSON.parse(data) : [];
+        try {
+            const data = localStorage.getItem('coffeeEntries');
+            return data ? JSON.parse(data) : [];
+        } catch (e) {
+            console.error('Failed to load from localStorage:', e);
+            return [];
+        }
     }
 
     loadCustomTypes() {
-        const data = localStorage.getItem('customCoffeeTypes');
-        return data ? JSON.parse(data) : [];
+        try {
+            const data = localStorage.getItem('customCoffeeTypes');
+            return data ? JSON.parse(data) : [];
+        } catch (e) {
+            console.error('Failed to load custom types:', e);
+            return [];
+        }
     }
 
     loadDailyGoal() {
-        const goal = localStorage.getItem('dailyGoal');
-        return goal ? parseInt(goal) : 0;
+        try {
+            const goal = localStorage.getItem('dailyGoal');
+            return goal ? parseInt(goal) : 0;
+        } catch (e) {
+            console.error('Failed to load daily goal:', e);
+            return 0;
+        }
     }
 
     loadBudget() {
-        const budget = localStorage.getItem('monthlyBudget');
-        return budget ? parseFloat(budget) : 0;
+        try {
+            const budget = localStorage.getItem('monthlyBudget');
+            return budget ? parseFloat(budget) : 0;
+        } catch (e) {
+            console.error('Failed to load budget:', e);
+            return 0;
+        }
     }
 
     saveCustomTypes() {
-        localStorage.setItem('customCoffeeTypes', JSON.stringify(this.customCoffeeTypes));
+        try {
+            localStorage.setItem('customCoffeeTypes', JSON.stringify(this.customCoffeeTypes));
+        } catch (e) {
+            console.error('Failed to save custom types:', e);
+            alert('Warning: Unable to save custom types. Your storage may be full.');
+        }
     }
 
     saveDailyGoal() {
-        localStorage.setItem('dailyGoal', this.dailyGoal.toString());
+        try {
+            localStorage.setItem('dailyGoal', this.dailyGoal.toString());
+        } catch (e) {
+            console.error('Failed to save daily goal:', e);
+        }
     }
 
     saveBudget() {
-        localStorage.setItem('monthlyBudget', this.budget.toString());
+        try {
+            localStorage.setItem('monthlyBudget', this.budget.toString());
+        } catch (e) {
+            console.error('Failed to save budget:', e);
+        }
     }
 
     addCustomCoffeeType() {
@@ -533,36 +571,59 @@ class CoffeeTracker {
             return;
         }
         
+        // Check file size (max 5MB before compression)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Image file is too large. Please select an image under 5MB.');
+            return;
+        }
+        
         const reader = new FileReader();
         reader.onload = (e) => {
             const img = new Image();
             img.onload = () => {
-                // Compress image
-                const canvas = document.createElement('canvas');
-                const maxSize = 400;
-                let width = img.width;
-                let height = img.height;
-                
-                if (width > height) {
-                    if (width > maxSize) {
-                        height *= maxSize / width;
-                        width = maxSize;
+                try {
+                    // Compress image
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    if (!ctx) {
+                        alert('Unable to process image. Please try a different image.');
+                        return;
                     }
-                } else {
-                    if (height > maxSize) {
-                        width *= maxSize / height;
-                        height = maxSize;
+                    
+                    const maxSize = 400;
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    if (width > height) {
+                        if (width > maxSize) {
+                            height *= maxSize / width;
+                            width = maxSize;
+                        }
+                    } else {
+                        if (height > maxSize) {
+                            width *= maxSize / height;
+                            height = maxSize;
+                        }
                     }
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    this.currentPhoto = canvas.toDataURL('image/jpeg', 0.7);
+                } catch (error) {
+                    console.error('Error processing image:', error);
+                    alert('Error processing image. Please try a different image.');
                 }
-                
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-                
-                this.currentPhoto = canvas.toDataURL('image/jpeg', 0.7);
+            };
+            img.onerror = () => {
+                alert('Unable to load image. Please try a different file.');
             };
             img.src = e.target.result;
+        };
+        reader.onerror = () => {
+            alert('Error reading file. Please try again.');
         };
         reader.readAsDataURL(file);
     }
