@@ -543,17 +543,28 @@ class CoffeeTracker {
         
         this.showConfirmDialog('Import will merge with existing data. Continue?', () => {
             const entries = [];
+            // Generate unique IDs based on timestamp and random component
+            const baseTimestamp = Date.now();
             for (let i = 1; i < lines.length; i++) {
                 const [date, time, type, size, cost, rating] = lines[i].split(',').map(s => s.trim());
                 if (date && time && type && size) {
-                    entries.push({
-                        id: Date.now() + i,
-                        type,
-                        size,
-                        cost: parseFloat(cost) || 0,
-                        rating: rating ? parseInt(rating) : null,
-                        timestamp: new Date(`${date} ${time}`).toISOString()
-                    });
+                    try {
+                        const parsedDate = new Date(`${date} ${time}`);
+                        if (isNaN(parsedDate.getTime())) {
+                            console.warn(`Skipping invalid date: ${date} ${time}`);
+                            continue;
+                        }
+                        entries.push({
+                            id: baseTimestamp + i * 1000 + Math.floor(Math.random() * 1000),
+                            type,
+                            size,
+                            cost: parseFloat(cost) || 0,
+                            rating: rating ? parseInt(rating) : null,
+                            timestamp: parsedDate.toISOString()
+                        });
+                    } catch (error) {
+                        console.warn(`Error parsing row ${i}:`, error);
+                    }
                 }
             }
             
@@ -700,7 +711,13 @@ class CoffeeTracker {
         // Load saved achievements
         const saved = localStorage.getItem('coffeeTrackerAchievements');
         if (saved) {
-            this.achievements = JSON.parse(saved);
+            try {
+                this.achievements = JSON.parse(saved);
+            } catch (error) {
+                console.error('Error loading achievements:', error);
+                // Reset to defaults if corrupted
+                this.achievements = this.initializeAchievements();
+            }
         }
         
         // First Cup
