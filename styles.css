@@ -89,7 +89,7 @@ h1 {
     font-size: 0.9rem;
 }
 
-.add-coffee-section, .history-section {
+.add-coffee-section, .history-section, .caffeine-tracker-section, .analytics-section, .charts-section, .calendar-section {
     background: var(--white);
     padding: 30px;
     border-radius: var(--border-radius);
@@ -97,7 +97,7 @@ h1 {
     margin-bottom: 30px;
 }
 
-.add-coffee-section h2, .history-section h2 {
+.add-coffee-section h2, .history-section h2, .caffeine-tracker-section h2, .analytics-section h2, .charts-section h2, .calendar-section h2 {
     color: var(--primary-color);
     margin-bottom: 20px;
     font-size: 1.5rem;
@@ -275,6 +275,270 @@ footer {
     background: var(--secondary-color);
 }
 
+/* Caffeine Tracker Styles */
+.caffeine-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.caffeine-card {
+    background: var(--light-bg);
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.caffeine-card h3 {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.caffeine-amount {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 10px 0;
+}
+
+.caffeine-label {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.caffeine-bar {
+    width: 100%;
+    height: 12px;
+    background: #E0E0E0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.caffeine-progress {
+    height: 100%;
+    background: #4CAF50;
+    transition: width 0.5s ease, background 0.3s ease;
+}
+
+.caffeine-status {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 10px;
+}
+
+.caffeine-info {
+    background: var(--light-bg);
+    padding: 25px;
+    border-radius: 8px;
+}
+
+.caffeine-info h3 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.caffeine-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.caffeine-info li {
+    padding: 8px 0;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+/* Analytics Dashboard Styles */
+.analytics-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.analytics-card {
+    background: var(--light-bg);
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.analytics-card:hover {
+    transform: translateY(-3px);
+}
+
+.analytics-card h3 {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.analytics-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 10px 0;
+}
+
+.analytics-label {
+    color: var(--text-light);
+    font-size: 0.85rem;
+}
+
+/* Charts Section Styles */
+.chart-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: var(--light-bg);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    background: var(--accent-color);
+}
+
+.tab-btn.active {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    padding: 20px;
+    background: var(--light-bg);
+    border-radius: 8px;
+}
+
+/* Calendar Heatmap Styles */
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-controls h3 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.calendar-nav {
+    background: var(--light-bg);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.calendar-nav:hover {
+    background: var(--accent-color);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.calendar-day-header {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+    padding: 8px 0;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--light-bg);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.calendar-day.empty {
+    background: transparent;
+}
+
+.calendar-day:not(.empty):hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.calendar-day[data-level="0"] {
+    background: var(--light-bg);
+    color: var(--text-dark);
+}
+
+.calendar-day[data-level="1"] {
+    background: #D4C5B9;
+    color: var(--text-dark);
+}
+
+.calendar-day[data-level="2"] {
+    background: #A67C52;
+    color: var(--white);
+}
+
+.calendar-day[data-level="3"] {
+    background: #8B6645;
+    color: var(--white);
+}
+
+.calendar-day[data-level="4"] {
+    background: #6F4E37;
+    color: var(--white);
+}
+
+.calendar-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.legend-item {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+}
+
+.legend-item[data-level="0"] { background: var(--light-bg); }
+.legend-item[data-level="1"] { background: #D4C5B9; }
+.legend-item[data-level="2"] { background: #A67C52; }
+.legend-item[data-level="3"] { background: #8B6645; }
+.legend-item[data-level="4"] { background: #6F4E37; }
+
 /* Responsive design */
 @media (max-width: 768px) {
     h1 {
@@ -303,5 +567,29 @@ footer {
 
     .coffee-time {
         margin-right: 0;
+    }
+
+    .caffeine-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .analytics-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-tabs {
+        flex-wrap: wrap;
+    }
+
+    .chart-container {
+        height: 250px;
+    }
+
+    .calendar-grid {
+        gap: 4px;
+    }
+
+    .calendar-day {
+        font-size: 0.75rem;
     }
 }
